@@ -11,7 +11,6 @@ class GearsController < ApplicationController
     # 作成
     def new
         @gear = Gear.new
-        p params
         @mntevents_id = params[:mntevents_id]
         
     end
