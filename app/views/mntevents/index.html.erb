@@ -1,0 +1,23 @@
+<h1>山行記録一覧</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>山行名</th>
+        <th>山行日</th>
+        <th>山名</th>
+        <th>メモ</th>
+    </tr>
+    <% @mntevents.each do |mntevent| %>
+    <tr>
+        <td><%= mntevent.id %></td>
+        <td><%= mntevent.eventname %></td>
+        <td><%= mntevent.eventdate %></td>
+        <td><%= mntevent.mnt %></td>
+        <td><%= mntevent.memo %></td>
+        <td><%= link_to 'show', mntevent_path(mntevent) %></td>
+    </tr>
+    <% end %>
+</table>
+
+<%= link_to '新しい山行記録の作成', new_mntevent_path %>

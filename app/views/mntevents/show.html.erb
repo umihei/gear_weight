@@ -1,0 +1,35 @@
+<h1>山行記録</h1>
+<p>
+    山行名:<br>
+    <%= @mntevent.eventname %>
+    
+</p>
+
+<p>
+    山に行った日:<br>
+    <%= @mntevent.eventdate %>
+    
+</p>
+
+<p>
+    山:<br>
+    <%= @mntevent.mnt %>
+    
+</p>
+
+<table>
+    <tr>
+        <th>ギア名</th>
+        <th>重さ</th>
+    </tr>
+    <% @gears.each do |gear| %>
+    <tr>
+        <td><%= gear.name %></td>
+        <td><%= gear.weight %></td>
+    </tr>
+    <% end %>
+</table>
+
+<!--ギアの登録というリンクをクリックすると，newアクションが呼び出され，gearsテーブルの外部キーである@mntevent.idが渡されます-->
+<%= link_to 'ギアの登録',  new_gear_path(mntevents_id:@mntevent.id) %><br>
+<%= link_to '山行記録一覧', mntevents_path %>
