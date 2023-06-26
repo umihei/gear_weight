@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_26_031635) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_26_103433) do
   create_table "gears", force: :cascade do |t|
     t.integer "mntevents_id"
     t.string "name"
@@ -30,6 +30,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_26_031635) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.integer "total_weight", default: 0
     t.index ["user_id"], name: "index_mntevents_on_user_id"
   end
 

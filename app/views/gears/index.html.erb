@@ -11,6 +11,7 @@
         <td><%= gear.name %></td>
         <td><%= gear.weight %></td>
         <td><%= link_to '詳細', gear_path(gear) %></td>
+        <td><%= link_to '編集', edit_gear_path(gear) %></td>
     </tr>
     <% end %>
 </table>

@@ -6,4 +6,5 @@ class Mntevent < ApplicationRecord
     validates :eventname, presence: true
     validates :eventdate, presence: true
     validates :mnt, presence: true
+    validates :total_weight, numericality: { only_integer: true }
 end

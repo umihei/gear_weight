@@ -26,9 +26,14 @@
     <tr>
         <td><%= gear.name %></td>
         <td><%= gear.weight %></td>
+        <td><%= link_to '編集', edit_gear_path(gear) %></td>
     </tr>
     <% end %>
 </table>
+
+<p>
+    ギアの総重量：<%= @mntevent.total_weight %>
+</p>
 
 <!--ギアの登録というリンクをクリックすると，newアクションが呼び出され，gearsテーブルの外部キーである@mntevent.idが渡されます-->
 <%= link_to 'ギアの登録',  new_gear_path(mntevents_id:@mntevent.id) %><br>
