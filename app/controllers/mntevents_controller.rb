@@ -33,10 +33,18 @@ class MnteventsController < ApplicationController
     
     # 編集
     def edit
+        @mntevent = Mntevent.find(params[:id])
+        
     end
     
     # 更新
     def update
+        @mntevent = Mntevent.find(params[:id])
+        if @mntevent.update(mntevent_params)
+            redirect_to @mntevent
+        else
+            render 'edit', status: :unprocessable_entity
+        end
     end
     
     # 削除
