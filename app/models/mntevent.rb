@@ -1,6 +1,6 @@
 class Mntevent < ApplicationRecord
     # has_many :gears
-    has_many :gears, foreign_key: :mntevents_id
+    has_many :gears, foreign_key: :mntevents_id, dependent: :destroy
     belongs_to :user
     
     validates :eventname, presence: true
