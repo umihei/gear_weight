@@ -2,7 +2,9 @@ class MnteventsController < ApplicationController
     
     # イベント一覧
     def index
-        @mntevents = Mntevent.all
+        # @mntevents = Mntevent.all
+        user = User.find(current_user.id)
+        @user_mntevents = user.mntevent
     end
     
     # イベント詳細
@@ -21,9 +23,12 @@ class MnteventsController < ApplicationController
         # mnteventモデルを初期化
         @mntevent = Mntevent.new(mntevent_params)
         # mnteventモデルをDBへ保存
-        @mntevent.save
-        # showへリダイレクト
-        redirect_to @mntevent
+        if @mntevent.save
+            # showへリダイレクト
+            redirect_to @mntevent
+        else
+           render 'new', status: :unprocessable_entity 
+        end
     end
     
     # 編集
@@ -44,7 +49,7 @@ class MnteventsController < ApplicationController
     private
     # eventname eventdate mntのみ許可
     def mntevent_params
-        params.require(:mntevent).permit(:eventname,:eventdate,:mnt)
+        params.require(:mntevent).permit(:eventname,:eventdate,:mnt, :user_id)
     end
     
 end

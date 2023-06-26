@@ -13,6 +13,7 @@
     
     <div>
         <%= form.hidden_field :mntevents_id, value: @mntevents_id %>
+        <%= form.hidden_field :user_id, value: current_user.id %>
         <%= form.submit %>
     </div>
     

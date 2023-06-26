@@ -1,7 +1,15 @@
 <h1>新しい山行の登録</h1>
 
 <%= form_with model: @mntevent do |form| %>
-
+    <% if @mntevent.errors.any? %>
+        <div>
+            <ul>
+                <% @mntevent.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
     <div>
         <%= form.label :"山行の名前" %><br>
         <%= form.text_field :eventname %>
@@ -17,6 +25,9 @@
         <%= form.text_field :mnt %>
     </div>
     <div>
+        <%= form.hidden_field :user_id, value: current_user.id %>
         <%= form.submit %>
     </div>
 <% end %>
+
+<%= link_to '山行記録一覧に戻る', mntevents_path %>

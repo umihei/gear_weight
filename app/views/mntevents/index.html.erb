@@ -1,5 +1,4 @@
-<h1>山行記録一覧</h1>
-
+<h1><%= current_user.username %>さんの山行記録一覧</h1>
 <table>
     <tr>
         <th>ID</th>
@@ -8,16 +7,18 @@
         <th>山名</th>
         <th>メモ</th>
     </tr>
-    <% @mntevents.each do |mntevent| %>
+    <% @user_mntevents.each do |mntevent| %>
     <tr>
         <td><%= mntevent.id %></td>
         <td><%= mntevent.eventname %></td>
         <td><%= mntevent.eventdate %></td>
         <td><%= mntevent.mnt %></td>
         <td><%= mntevent.memo %></td>
-        <td><%= link_to 'show', mntevent_path(mntevent) %></td>
+        <td><%= link_to '詳細', mntevent_path(mntevent) %></td>
+        <td><%= link_to '編集', edit_mntevent_path(mntevent) %></td>
     </tr>
     <% end %>
 </table>
 
-<%= link_to '新しい山行記録の作成', new_mntevent_path %>
+<%= link_to '新しい山行記録の作成', new_mntevent_path %><br>
+<%= link_to 'ギア一覧', gears_path %>
