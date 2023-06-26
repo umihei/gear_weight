@@ -23,6 +23,9 @@ class GearsController < ApplicationController
         weight = params[:gear][:weight]
         mntevents_id = params[:gear][:mntevents_id]
         
+        # 山行記録を取り出す
+        @mntevent = Mntevent.find(mntevents_id)
+        
         # モデルを初期化
         @gear = Gear.new(name: params[:gear][:name], weight: weight.to_i, mntevents_id: mntevents_id.to_i, user_id: params[:gear][:user_id])
         
@@ -52,10 +55,5 @@ class GearsController < ApplicationController
    def gear_params
        params.require(:gear).permit(:mntevents_id, :weight, :name,:user_id)
    end
-   
-#   private
-#   def question_params
-#         params.require(:question).permit(:title,:name,:content)
-   
-#   end
+
 end
