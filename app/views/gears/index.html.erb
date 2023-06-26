@@ -1,0 +1,18 @@
+<h1><%= current_user.username %>さんのギア一覧</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>ギア名</th>
+        <th>重さ</th>
+    </tr>
+    <% @user_gears.each do |gear| %>
+    <tr>
+        <td><%= gear.id %></td>
+        <td><%= gear.name %></td>
+        <td><%= gear.weight %></td>
+        <td><%= link_to '詳細', gear_path(gear) %></td>
+    </tr>
+    <% end %>
+</table>
+
+<%= link_to '山行記録一覧へ戻る', mntevents_path %>

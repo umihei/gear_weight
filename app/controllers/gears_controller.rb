@@ -2,6 +2,8 @@ class GearsController < ApplicationController
     
     # 一覧表示
     def index
+        user = User.find(current_user.id)
+        @user_gears = user.gear
     end
     
     # 詳細ページ表示
@@ -22,7 +24,7 @@ class GearsController < ApplicationController
         mntevents_id = params[:gear][:mntevents_id]
         
         # モデルを初期化
-        @gear = Gear.new(name: params[:gear][:name], weight: weight.to_i, mntevents_id: mntevents_id.to_i)
+        @gear = Gear.new(name: params[:gear][:name], weight: weight.to_i, mntevents_id: mntevents_id.to_i, user_id: params[:gear][:user_id])
         
         # DBに保存
         if @gear.save
@@ -48,7 +50,7 @@ class GearsController < ApplicationController
    
    private
    def gear_params
-       params.require(:gear).permit(:mntevents_id, :weight, :name)
+       params.require(:gear).permit(:mntevents_id, :weight, :name,:user_id)
    end
    
 #   private

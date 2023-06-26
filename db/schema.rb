@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_24_074256) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_26_031635) do
   create_table "gears", force: :cascade do |t|
     t.integer "mntevents_id"
     t.string "name"
     t.integer "weight"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["mntevents_id"], name: "index_gears_on_mntevents_id"
+    t.index ["user_id"], name: "index_gears_on_user_id"
   end
 
   create_table "mntevents", force: :cascade do |t|
@@ -27,7 +29,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_24_074256) do
     t.text "memo"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_mntevents_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "username"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "gears", "mntevents", column: "mntevents_id"
+  add_foreign_key "gears", "users"
+  add_foreign_key "mntevents", "users"
 end
