@@ -5,7 +5,7 @@
         <th>山行名</th>
         <th>山行日</th>
         <th>山名</th>
-        <th>メモ</th>
+        <th>ギア総重量</th>
     </tr>
     <% @user_mntevents.each do |mntevent| %>
     <tr>
@@ -13,9 +13,10 @@
         <td><%= mntevent.eventname %></td>
         <td><%= mntevent.eventdate %></td>
         <td><%= mntevent.mnt %></td>
-        <td><%= mntevent.memo %></td>
+        <td><%= mntevent.total_weight %></td>
         <td><%= link_to '詳細', mntevent_path(mntevent) %></td>
         <td><%= link_to '編集', edit_mntevent_path(mntevent) %></td>
+        <td><%= link_to '削除', mntevent_path(mntevent), data: { turbo_method: 'delete', turbo_confirm: 'Are you sure?' } %></td>
     </tr>
     <% end %>
 </table>

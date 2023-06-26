@@ -83,6 +83,9 @@ class GearsController < ApplicationController
    
    # 削除
    def destroy
+       @gear = Gear.find(params[:id])
+        @gear.destroy
+        redirect_to gears_path
    end
    
    private

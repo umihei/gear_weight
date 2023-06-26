@@ -49,6 +49,9 @@ class MnteventsController < ApplicationController
     
     # 削除
     def destroy
+        @mntevent = Mntevent.find(params[:id])
+        @mntevent.destroy
+        redirect_to mntevents_path
     end
     
     def new_wear
