@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  eventname: MyString
-  eventdate: 2023-06-24
-  mnt: MyString
-  memo: MyText
+# onemntevent:
+#   eventname: MyString
+#   eventdate: 2023-06-24
+#   mnt: MyString
+#   memo: MyText
 
-two:
-  eventname: MyString
-  eventdate: 2023-06-24
-  mnt: MyString
-  memo: MyText
+# two:
+#   eventname: MyString
+#   eventdate: 2023-06-24
+#   mnt: MyString
+#   memo: MyText

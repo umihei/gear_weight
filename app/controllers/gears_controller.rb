@@ -14,14 +14,41 @@ class GearsController < ApplicationController
     def new
         @gear = Gear.new
         @mntevents_id = params[:mntevents_id]
+        @options = Gear.pluck(:name)
         
     end
     
+    
+
+def create_test
+  input_text = params[:model][:input_text] # テキストフィールドからの入力を取得
+  existing_record = Model.find_by(column_name: input_text) # 特定のカラム内に指定された文字列が存在するか確認
+
+  if existing_record.present?
+    flash[:error] = "エラーメッセージ" # エラーメッセージを設定
+    redirect_to new_model_path # エラーメッセージを表示するページにリダイレクトする
+  else
+    @model = Model.new(column_name: input_text) # 新しいレコードを作成
+    if @model.save
+      flash[:success] = "保存しました"
+      redirect_to @model
+    else
+      flash[:error] = "保存に失敗しました"
+      render :new
+    end
+  end
+end
+
+
     # 登録
     def create
         # stringのパラメタを整数型に変換する
         weight = params[:gear][:weight]
         mntevents_id = params[:gear][:mntevents_id]
+        name = params[:gear][:name]
+        existing_record = Gear.find_by(name: name)
+        
+        p existing_record
         
         # 山行記録を取り出して，総重量に今登録したギアの重さを加算
         mntevent = Mntevent.find(mntevents_id)
@@ -46,6 +73,22 @@ class GearsController < ApplicationController
            render 'new', status: :unprocessable_entity 
         end
             
+    end
+    
+    
+    def check_duplicate
+      input_text = params[:name]
+      existing_record = Gear.exists?(name: input_text)
+    
+      render json: { duplicate: existing_record }
+    end
+    
+    def get_weight
+        gear_name = params[:name]
+        existing_record = Gear.find_by(name: gear_name)
+        
+        p existing_record
+        render json: {weight: existing_record[:weight]}
     end
 
    # 編集
