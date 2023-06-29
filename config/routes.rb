@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
   
+  post '/check_duplicate', to: 'gears#check_duplicate'
+  post '/get_weight', to: 'gears#get_weight'
+  
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

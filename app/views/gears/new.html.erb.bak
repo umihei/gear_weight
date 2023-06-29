@@ -1,0 +1,31 @@
+<h1>新しいギアの登録</h1>
+
+<%= form_with model: @gear do |form| %>
+    
+    <div>
+        <%= form.label :"ギアの名前" %><br>
+        <%= form.select :name, options_for_select(@options), prompt: '選択してください' %>
+    </div>
+
+    <div>
+        <%= form.label :"ギアの名前" %><br>
+        <%= form.text_field :name %>
+    </div>
+    <div>
+        <%= form.label :"重さ" %><br>
+        <%= form.number_field :weight %>
+    </div>
+    
+    <div>
+        <%= form.hidden_field :mntevents_id, value: @mntevents_id %>
+        <%= form.hidden_field :user_id, value: current_user.id %>
+        <%= form.submit %>
+    </div>
+    
+    <div>
+        <%= p "山行ID #{@mntevents_id}" %>
+    </div>
+<% end %>
+
+<%= link_to '山行記録に戻る', mntevent_path(@mntevents_id) %>
+

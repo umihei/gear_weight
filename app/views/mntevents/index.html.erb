@@ -23,3 +23,44 @@
 
 <%= link_to '新しい山行記録の作成', new_mntevent_path %><br>
 <%= link_to 'ギア一覧', gears_path %>
+
+<div>
+<h2>ギアの重さの推移</h2>
+ 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+<canvas id="myChart"></canvas>
+
+ <script>
+    // データとオプションを定義
+    var data = {
+      labels: <%= @mnts.to_json.html_safe %>,
+      datasets: [{
+        label: 'ギアの重さの推移',
+        data: <%= @weights.to_json.html_safe %>,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }]
+    };
+    
+    var chartOptions = {
+        responsive: true,
+        maintainAspectRaitio: false,
+        plugins: {
+        legend: {
+            display: false
+        }
+        }
+    }
+
+    // グラフを描画
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: data,
+      options: chartOptions
+    });
+    myChart.canvas.parentNode.style.height = '600px';
+    myChart.canvas.parentNode.style.width = '500px';
+</script>
+</div>

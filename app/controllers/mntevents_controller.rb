@@ -5,6 +5,11 @@ class MnteventsController < ApplicationController
         # @mntevents = Mntevent.all
         user = User.find(current_user.id)
         @user_mntevents = user.mntevent
+        
+        # グラフ描画用のデータを取得
+        @weights = user.mntevent.pluck(:total_weight)
+        @mnts = user.mntevent.pluck(:mnt)
+        
     end
     
     # イベント詳細
@@ -52,9 +57,6 @@ class MnteventsController < ApplicationController
         @mntevent = Mntevent.find(params[:id])
         @mntevent.destroy
         redirect_to mntevents_path
-    end
-    
-    def new_wear
     end
     
     private
