@@ -14,7 +14,10 @@ class GearsController < ApplicationController
     def new
         @gear = Gear.new
         @mntevents_id = params[:mntevents_id]
-        @options = Gear.pluck(:name)
+        
+        # Userに紐づいたギア一覧を取得
+        user = User.find(current_user.id)
+        @options = user.gear.pluck(:name)
         
     end
     
@@ -78,7 +81,10 @@ end
     
     def check_duplicate
       input_text = params[:name]
-      existing_record = Gear.exists?(name: input_text)
+      # Userに紐づいたギア一覧を取得
+      user = User.find(current_user.id)
+      existing_record = user.gear.exists?(name: input_text)
+    #   existing_record = Gear.exists?(name: input_text)
     
       render json: { duplicate: existing_record }
     end

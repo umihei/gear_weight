@@ -5,3 +5,6 @@ class Gear < ApplicationRecord
     validates :name, presence: true
     validates :weight, presence: true, numericality: { only_integer: true }
 end
+
+#   validates :name, uniqueness: { scope: :user_id }
+

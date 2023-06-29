@@ -3,15 +3,15 @@
 <%= form_with model: @gear do |form| %>
     
     <div>
-        <%= form.label :"ギアの名前" %><br>
+        <%= form.label :"ギアの名前（過去の登録情報の呼び出し）" %><br>
         <%= form.select :name, options_for_select(@options), prompt: '選択してください' %>
     </div>
     <div>
-        <%= form.label :name %><br>
+        <%= form.label :"ギアの名前（新規登録）" %><br>
         <%= form.text_field :name, id: "text_name_id" %>
     </div>
     <div>
-        <%= form.label :"重さ" %><br>
+        <%= form.label :"重さ（グラム）" %><br>
         <%= form.number_field :weight %>
     </div>
     
@@ -95,9 +95,17 @@
   document.addEventListener("DOMContentLoaded", () => {
   const select = document.getElementById("gear_name");
   const numberField = document.getElementById("gear_weight");
+  
+  
 
   select.addEventListener("change", () => {
     
+    // number fieldが空（初期状態）であれば，numberFieldを空にして，readOnlyをFalseにします
+    if (select.value == ""){
+      numberField.value = null
+      numberField.readOnly = false
+    }
+    else {
     fetch('/get_weight', {
       method: 'POST',
       headers: {
@@ -112,6 +120,7 @@
           numberField.readOnly = true
       })
       .catch(error => console.error('エラー:', error));
+  }
   });
 });
 </script>
