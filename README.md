@@ -7,10 +7,10 @@
 - ユーザごとに山行記録，ギアを管理
 - それぞれの山行記録のギアの総重量の変化を棒グラフで可視化
 - テスト実装済み（一部途中）
+- Capybaraを使った機能テスト（一部途中）
 
 ## この先やることメモ
 - gearsテーブルのwearの重複禁止対応
-- Capybaraを使った機能テスト
 - アプリケーションのコンテナ化
 - AWSへのデプロイ
 - 外部API連携（地図API）
@@ -41,7 +41,7 @@
 - mntevent_params
   - パラメタのバリデーション
 
-### gear
+#### gear
 ギアの管理
 
 - index
@@ -79,3 +79,75 @@
   - テキストフィールドから新規ギアを登録するときは，そのユーザがすでに登録しているものは登録できない．
 
 
+## テスト
+### 事前準備
+- chronium
+
+```bash
+sudo yum install -y epel-release
+sudo yum install -y chromium
+```
+
+- gem
+
+```ruby
+group :test do
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem "webdrivers"
+end
+```
+
+- test_helper.rb
+
+```test_helper.rb
+# Capybaraを使用するための設定
+class ActionDispatch::IntegrationTest
+  include Capybara::DSL
+  include Capybara::Minitest::Assertions
+end
+
+# Minitestの実行中にCapybaraを使用するための設定
+class Minitest::Test
+  include Capybara::DSL
+end
+```
+
+- application_system_test_case.rb
+
+```application_system_test_case.rb
+class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
+  Capybara.register_driver :selenium_headless do |app|
+      options = Selenium::WebDriver::Chrome::Options.new
+    
+      options.add_argument('--headless')
+      options.add_argument('--no-sandbox')
+      options.add_argument('--disable-gpu')
+      options.add_argument('--disable-dev-shm-usage')
+      options.add_argument('--window-size=1366,720')
+      options.add_argument('--remote-debugging-port=9222')
+      options.binary = '/usr/bin/chromium-browser'
+    
+      Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  end
+
+    Capybara.default_driver = :selenium_headless
+
+  driven_by :selenium_headless, using: :chrome, screen_size: [1400, 1400]
+end
+```
+
+#### 実行
+
+- ユニットテスト（モデルのテスト），結合テスト（コントローラテスト）
+
+```bash
+rails test
+```
+
+- Headless Chromiumを用いたブラウザ経由の機能テストを実施
+
+```bash
+rails test:system
+```

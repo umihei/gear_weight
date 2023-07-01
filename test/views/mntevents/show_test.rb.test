@@ -1,6 +1,9 @@
 class MnteventShowViewTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+  
   def setup
     @user = users(:example_user)
+    sign_in @user
     # @gear = gears(:example_gear)
     @mntevent = Mntevent.create(eventname:"testevent", eventdate: "2023-06-30", mnt: "test", total_weight: 30, user_id: @user.id)
     @gear = Gear.create(name: "gearname", weight: 80, mntevents_id: @mntevent.id, user_id: @user.id)

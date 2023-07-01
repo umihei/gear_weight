@@ -1,0 +1,92 @@
+require 'test_helper'
+
+class MnteventFormViewTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
+  test 'should display form for creating new mntevent' do
+    
+    user = users(:example_user)
+    sign_in user
+    @mntevent = Mntevent.create(eventname:"testevent1", eventdate: "2023-06-30", mnt: "test", total_weight: 30, user_id: user.id)
+    # mntevent1 = Mntevent.create(eventname:"testevent1", eventdate: "2023-06-30", mnt: "test", total_weight: 30, user_id: user.id)
+    # mntevent2 = Mntevent.create(eventname:"testevent2", eventdate: "2023-06-30", mnt: "test", total_weight: 30, user_id: user.id)
+
+    # # テスト用データの作成
+    # user.mntevent << [mntevent1, mntevent2]
+    
+    # テスト用データの準備
+    # user = users(:example_user)
+
+    
+      
+    # テスト用データを使用してページを表示
+    get new_mntevent_path
+
+    # フォームの表示を検証
+    # assert_selector 'form' do
+      # エラーメッセージの表示を検証
+      # assert_no_selector 'div' if @mntevent.errors.none?
+      assert_select 'div', count: 0 if @mntevent.errors.none?
+
+      # ラベルと入力フィールドの表示を検証
+      assert_selector 'label', text: '山行の名前'
+      assert_selector 'input[type="text"][name="mntevent[eventname]"]'
+
+      assert_selector 'label', text: '山に行った日'
+      assert_selector 'input[type="date"][name="mntevent[eventdate]"]'
+
+      assert_selector 'label', text: '山の名前'
+      assert_selector 'input[type="text"][name="mntevent[mnt]"]'
+
+      assert_selector 'input[type="hidden"][name="mntevent[user_id]"][value=?]', user.id
+
+      assert_selector 'input[type="submit"]'
+    # end
+
+    # リンクの表示を検証
+    assert_link '山行記録一覧に戻る', href: mntevents_path
+  end
+end
+
+
+# require 'test_helper'
+# require 'rails-controller-testing'
+
+# class MnteventsEditViewTest < ActionDispatch::IntegrationTest
+#   include Devise::Test::IntegrationHelpers
+
+#   def setup
+      
+#     @user = users(:example_user)
+    
+#     @mntevent = Mntevent.create(eventname:"testevent1", eventdate: "2023-06-30", mnt: "test", total_weight: 30, user_id: @user.id)
+#     # @mntevent2 = Mntevent.create(eventname:"testevent2", eventdate: "2023-06-30", mnt: "test", total_weight: 30, user_id: @user.id)
+    
+#     # @mntevent1 = mntevents(:mntevent1)
+#     # @mntevent2 = mntevents(:mntevent2)
+#     sign_in @user
+#     # # テストに必要なデータのセットアップ
+#     # @mntevent = mntevents(:test_mntevent) # 適切な山行記録オブジェクトを指定
+
+#     # # ユーザーの認証
+#     # sign_in users(:test_user)
+#   end
+
+#   test "should display edit mountain event form" do
+#     get edit_mntevent_path(@mntevent)
+
+#     assert_response :success
+#     assert_select 'h1', text: '山行記録の編集'
+#     assert_select 'form[action=?][method=?]', mntevent_path(@mntevent), 'post' do
+#       assert_select 'div', count: 4
+#       assert_select 'label', text: '山行の名前'
+#       assert_select 'input[type=text][name=?][value=?]', 'mntevent[eventname]', @mntevent.eventname
+#       assert_select 'label', text: '山に行った日'
+#       assert_select 'input[type=date][name=?][value=?]', 'mntevent[eventdate]', @mntevent.eventdate.to_s
+#       assert_select 'label', text: '山の名前'
+#       assert_select 'input[type=text][name=?][value=?]', 'mntevent[mnt]', @mntevent.mnt
+#       assert_select 'input[type=hidden][name=?][value=?]', 'mntevent[user_id]', @user.id.to_s
+#       assert_select 'input[type=submit]'
+#     end
+#     assert_select 'a[href=?]', mntevents_path, text: '山行記録一覧に戻る'
+#   end
+# end
